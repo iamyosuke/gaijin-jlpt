@@ -1,21 +1,34 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import type { Word, Status } from '@prisma/client'
 
 interface FlashcardProps {
-  words: (Word & {
-    examples: { sentence: string; meaningEn: string }[]
-    wordStatus: { status: Status }[]
-  })[]
+  levelId: string;
 }
 
-export default function Flashcard({ words }: FlashcardProps) {
+const getFlashcardData = async (id: string) => {
+  const response = await fetch(`/api/v1/level/${id}`)
+  const data = await response.json()
+  return data
+}
+
+export default function Flashcard({ levelId }: FlashcardProps) {
+  const [words, setWords] = useState<(Word & { examples: { sentence: string; meaningEn: string }[]; wordStatus: { status: Status }[] })[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getFlashcardData(levelId)
+      setWords(data.words)
+    }
+    fetchData()
+  }, [levelId])
+
   const currentWord = words[currentIndex]
 
   const handleNext = () => {
@@ -34,6 +47,10 @@ export default function Flashcard({ words }: FlashcardProps) {
 
   const handleCardClick = () => {
     setShowAnswer(!showAnswer)
+  }
+
+  if (words.length === 0) {
+    return <div>Loading...</div>
   }
 
   return (
