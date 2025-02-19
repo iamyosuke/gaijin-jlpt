@@ -10,10 +10,26 @@ interface FlashcardProps {
   levelId: string;
 }
 
+enum AnswerStatus {
+  Correct = "correct",
+  Incorrect = "incorrect",
+  Skip = "skip"
+}
+
 const getFlashcardData = async (id: string) => {
   const response = await fetch(`/api/v1/level/${id}`)
   const data = await response.json()
   return data
+}
+
+const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
+  await fetch('/api/v1/word-status', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ wordId, isCorrect }),
+  })
 }
 
 export default function Flashcard({ levelId }: FlashcardProps) {
@@ -28,10 +44,13 @@ export default function Flashcard({ levelId }: FlashcardProps) {
     }
     fetchData()
   }, [levelId])
-
+  console.log(words);
   const currentWord = words[currentIndex]
 
-  const handleNext = () => {
+  const handleNext = (status: AnswerStatus) => {
+    if (status !== AnswerStatus.Skip) {
+      updateWordStatus(currentWord.id, status === AnswerStatus.Correct)
+    }
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
       setShowAnswer(false)
@@ -62,7 +81,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
         <span className="text-sm text-muted-foreground">
           {currentIndex + 1} / {words.length}
         </span>
-        <Button variant="ghost" onClick={handleNext} disabled={currentIndex === words.length - 1}>
+        <Button variant="ghost" onClick={() => handleNext(AnswerStatus.Skip)} disabled={currentIndex === words.length - 1}>
           <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
@@ -93,7 +112,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           size="lg" 
           variant="destructive"
           className="rounded-full w-16 h-16"
-          onClick={() => handleNext()}
+          onClick={() => handleNext(AnswerStatus.Incorrect)}
         >
           <X className="h-8 w-8" />
         </Button>
@@ -101,7 +120,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           size="lg" 
           variant="default" 
           className="rounded-full w-16 h-16 bg-green-500 hover:bg-green-600"
-          onClick={() => handleNext()}
+          onClick={() => handleNext(AnswerStatus.Correct)}
         >
           <Check className="h-8 w-8" />
         </Button>

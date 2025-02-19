@@ -49,22 +49,7 @@ export default async function Home() {
         </div>
       </main>
 
-      <nav className="sticky bottom-0 border-t bg-white py-4">
-        <div className="container max-w-md mx-auto flex justify-around items-center">
-          <Link href="/study" className="flex flex-col items-center gap-1 text-gray-500">
-            <BookOpen className="h-6 w-6" />
-            <span className="text-xs">Study</span>
-          </Link>
-          <Link href="/" className="flex flex-col items-center gap-1 text-blue-500">
-            <Layers className="h-6 w-6" />
-            <span className="text-xs">Levels</span>
-          </Link>
-          <Link href="/settings" className="flex flex-col items-center gap-1 text-gray-500">
-            <Settings className="h-6 w-6" />
-            <span className="text-xs">Settings</span>
-          </Link>
-        </div>
-      </nav>
+  
     </div>
   )
 }
