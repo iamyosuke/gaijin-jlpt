@@ -77,10 +77,11 @@ model Level {
 
 model Word {
   id         Int      @id @default(autoincrement())
-  level      Level    @relation(fields: [levelId], references: [id])
+  level      Level    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   levelId    Int
   kanji      String?
   furigana   String
+  romaji     String?
   meaningEn  String
   audioUrl   String?
   examples   Example[]
@@ -91,7 +92,7 @@ model Word {
 
 model Example {
   id        Int    @id @default(autoincrement())
-  word      Word   @relation(fields: [wordId], references: [id])
+  word      Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
   wordId    Int
   sentence  String
   meaningEn String
@@ -100,9 +101,9 @@ model Example {
 
 model UserProgress {
   id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  level     Level   @relation(fields: [levelId], references: [id])
+  level     Level   @relation(fields: [levelId], references: [id], onDelete: Cascade)
   levelId   Int
   completed Boolean
   progress  Int
@@ -111,9 +112,9 @@ model UserProgress {
 
 model UserWordStatus {
   id            Int    @id @default(autoincrement())
-  user          User   @relation(fields: [userId], references: [id])
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String
-  word          Word   @relation(fields: [wordId], references: [id])
+  word          Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
   wordId        Int
   status        Status
   lastReview    DateTime?

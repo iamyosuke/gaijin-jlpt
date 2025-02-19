@@ -13,6 +13,7 @@ async function main() {
           {
             kanji: '猫',
             furigana: 'ねこ',
+            romaji: 'neko',
             meaningEn: 'cat',
             examples: {
               create: [
@@ -26,6 +27,7 @@ async function main() {
           {
             kanji: '犬',
             furigana: 'いぬ',
+            romaji: 'inu',
             meaningEn: 'dog',
             examples: {
               create: [
@@ -50,6 +52,7 @@ async function main() {
           {
             kanji: '車',
             furigana: 'くるま',
+            romaji: 'kuruma',
             meaningEn: 'car',
             examples: {
               create: [
@@ -63,6 +66,7 @@ async function main() {
           {
             kanji: '電車',
             furigana: 'でんしゃ',
+            romaji: 'densha',
             meaningEn: 'train',
             examples: {
               create: [

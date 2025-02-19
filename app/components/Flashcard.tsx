@@ -94,7 +94,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           <h2 className="text-6xl mb-4">{currentWord.kanji}</h2>
           <div className="space-y-1">
             <p className="text-lg">{currentWord.furigana}</p>
-            {/* <p className="text-lg text-muted-foreground">{currentWord.romaji}</p> */}
+            <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
           </div>
           <p className="text-2xl font-medium">{currentWord.meaningEn}</p>
 

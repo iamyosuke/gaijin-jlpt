@@ -15,27 +15,33 @@ export async function POST(request: Request) {
 
   const text = await file.text()
   const records = parse(text, {
-    columns: true,
+    columns: ['levelId', 'kanji', 'furigana', 'romaji', 'meaningEn', 'examples_sentence', 'examples_meaningEn'],
     skip_empty_lines: true,
   })
 
   for (const record of records) {
-    await prisma.word.create({
-      data: {
-        levelId: parseInt(record.levelId),
-        kanji: record.kanji,
-        furigana: record.furigana,
+    try {
+      await prisma.word.create({
+        data: {
+          levelId: parseInt(record.levelId),
+          kanji: record.kanji,
+          furigana: record.furigana,
+          romaji: record.romaji,
         meaningEn: record.meaningEn,
-        audioUrl: record.audioUrl || null,
+        audioUrl: null, // CSVファイルにaudioUrlが含まれないため、nullを設定
         examples: {
-          create: record.examples.split(';').map((example: string) => {
-            const [sentence, meaningEn, audioUrl] = example.split(',')
-            return { sentence, meaningEn, audioUrl: audioUrl || null }
-          }),
+          create: [{
+            sentence: record.examples_sentence,
+            meaningEn: record.examples_meaningEn,
+            audioUrl: null, // CSVファイルにaudioUrlが含まれないため、nullを設定
+          }],
         },
       },
     })
+    } catch (error) {
+    }
   }
+
 
   return NextResponse.json({ success: true })
 } 

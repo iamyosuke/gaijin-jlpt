@@ -1,0 +1,11 @@
+  levelId,kanji,furigana,romaji,meaningEn,examples_sentence,examples_meaningEn
+  1,猫,ねこ,neko,cat,猫が好きです。,I like cats.
+  1,犬,いぬ,inu,dog,犬は友達です。,Dogs are friends.
+  2,車,くるま,kuruma,car,車を運転します。,I drive a car.
+  2,電車,でんしゃ,densha,train,電車で通勤します。,I commute by train.
+  3,食べる,たべる,taberu,eat,食べ物を食べます。,I eat food.
+  3,飲む,のむ,nomu,drink,水を飲みます。,I drink water.
+  4,走る,はしる,hashiru,run,公園で走ります。,I run in the park.
+  4,泳ぐ,およぐ,oyogu,swim,プールで泳ぎます。,I swim in the pool.
+  5,読む,よむ,yomu,read,本を読みます。,I read a book.
+  5,書く,かく,kaku,write,手紙を書きます。,I write a letter.
