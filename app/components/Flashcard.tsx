@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import type { Word, Status } from '@prisma/client'
+import type { Word, Status, Example } from '@prisma/client'
 
 interface FlashcardProps {
   levelId: string;
@@ -33,7 +33,7 @@ const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
 }
 
 export default function Flashcard({ levelId }: FlashcardProps) {
-  const [words, setWords] = useState<(Word & { examples: { sentence: string; meaningEn: string }[]; wordStatus: { status: Status }[] })[]>([])
+  const [words, setWords] = useState<(Word & { examples: Example[]; wordStatus: { status: Status }[] })[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
 
@@ -98,10 +98,14 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           </div>
           <p className="text-2xl font-medium">{currentWord.meaningEn}</p>
 
-          {showAnswer && currentWord.examples && currentWord.examples.length > 0 && (
+          {currentWord.examples && currentWord.examples.length > 0 && (
             <div className="mt-8 p-4 bg-muted rounded-lg">
-              <p className="text-lg mb-2">{currentWord.examples[0].sentence}</p>
-              <p className="text-muted-foreground">{currentWord.examples[0].meaningEn}</p>
+              {currentWord.examples.map((example) => (
+                <div key={example.id} className="mb-4">
+                  <p className="text-lg mb-2">{example.sentence}</p>
+                  <p className="text-muted-foreground">{example.meaningEn}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
