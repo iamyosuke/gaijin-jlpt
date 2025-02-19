@@ -17,7 +17,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    return NextResponse.json({ error: "レベルの並び替えに失敗しました" }, { status: 500 })
+    console.error(error)
+    return NextResponse.json({ error: 'Failed to reorder levels' }, { status: 500 })
   }
 }
 

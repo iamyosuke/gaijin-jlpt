@@ -3,7 +3,6 @@ import Link from "next/link"
 import { auth } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Settings, BookOpen, Layers } from "lucide-react"
 
 export default async function Home() {
   const session = await auth()

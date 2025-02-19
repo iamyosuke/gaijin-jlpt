@@ -1,8 +1,5 @@
-import { prisma } from "@/prisma"
 import Flashcard from '@/app/components/Flashcard';
 import { Word, Status } from "@prisma/client";
-import { redirect } from "next/navigation";
-import { auth } from '@/auth';
 
 export interface FlashcardProps {
   words: (Word & { 

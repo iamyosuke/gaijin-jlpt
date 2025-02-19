@@ -1,5 +1,4 @@
-
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
 import { SignOut } from '../components/signout-button'
 
@@ -8,10 +7,6 @@ export default async function SettingsPage() {
 
   if (!session || !session.user) {
     redirect('/login')
-  }
-
-  const handleLogout = () => {
-    signOut()
   }
 
   return (

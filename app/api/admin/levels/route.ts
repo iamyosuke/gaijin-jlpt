@@ -12,7 +12,8 @@ export async function POST(request: Request) {
     })
     return NextResponse.json(level)
   } catch (error) {
-    return NextResponse.json({ error: "レベルの作成に失敗しました" }, { status: 500 })
+    console.error(error)
+    return NextResponse.json({ error: "Failed to create level" }, { status: 500 })
   }
 }
 

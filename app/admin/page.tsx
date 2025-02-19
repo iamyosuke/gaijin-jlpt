@@ -3,14 +3,13 @@
 import type React from "react"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import { ChevronDown, ChevronUp, Grip, Plus, Save, Trash2, Upload } from "lucide-react"
 import type { Word, Level, Example } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 
 interface WordWithExamples extends Word {
   examples: Example[]
@@ -27,7 +26,6 @@ export default function AdminPage() {
   const [expandedLevels, setExpandedLevels] = useState<number[]>([])
   const [editingLevel, setEditingLevel] = useState<number | null>(null)
   const [newLevelName, setNewLevelName] = useState("")
-  const router = useRouter()
 
   useEffect(() => {
     fetchLevels()
@@ -135,7 +133,7 @@ export default function AdminPage() {
     }
   }
 
-  const onDragEnd = async (result: any) => {
+  const onDragEnd = async (result: DropResult) => {
     if (!result.destination) return
 
     const items = Array.from(levels)

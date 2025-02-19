@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/prisma'
 import { parse } from 'csv-parse/sync'
-import { auth } from '@/auth'
 
 export async function POST(request: Request) {
-  const session = await auth()
-
   const formData = await request.formData()
   const file = formData.get('file') as File
 
@@ -39,9 +36,9 @@ export async function POST(request: Request) {
       },
     })
     } catch (error) {
+      console.error(error)
     }
   }
-
 
   return NextResponse.json({ success: true })
 } 

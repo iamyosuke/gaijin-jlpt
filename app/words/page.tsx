@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { prisma } from '@/prisma'
 import type { Word, UserWordStatus } from '@prisma/client'
 
 interface WordWithStatus extends Word {

@@ -19,6 +19,7 @@ export async function DELETE(request: Request) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
+    console.error(error)
     return NextResponse.json({ error: 'Failed to delete word and related records' }, { status: 500 })
   }
 } 
