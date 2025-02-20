@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { BookOpen, Trophy } from "lucide-react"
 import { AnswerStatus } from "./components/Flashcard"
+import { getLevels } from "@/lib/levels"
 
 export default async function Home() {
   const session = await auth()
@@ -28,19 +29,8 @@ export default async function Home() {
     )
   }
 
-  const levels = await prisma.level.findMany({
-    orderBy: { order: "asc" },
-    include: {
-      words: {
-        include: {
-          wordStatus: {
-            where: { userId: session.user?.id },
-          },
-        },
-      },
-    },
-  })
-
+  const levels = await getLevels()
+  console.log(levels)
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-center">Learning Levels</h1>

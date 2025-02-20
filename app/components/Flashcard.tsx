@@ -93,8 +93,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
 
   return (
     <div className="flex flex-col items-center max-w-md mx-auto">
-      <Progress value={(currentIndex / words.length) * 100} className="w-full mb-4" />
-
+      <Progress value={words.length > 0 ? ((currentIndex + 1) / words.length) * 100 : 0} className="w-full mb-4" />
       <div className="w-full mb-4 flex justify-between items-center">
         <Button variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0}>
           <ChevronLeft className="h-6 w-6" />
