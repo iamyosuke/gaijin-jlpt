@@ -1,22 +1,67 @@
-import { auth } from '@/auth'
-import { redirect } from 'next/navigation'
-import { SignOut } from '../components/signout-button'
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui/button"
+import { SignOut } from "../components/signout-button"
 
 export default async function SettingsPage() {
   const session = await auth()
 
   if (!session || !session.user) {
-    redirect('/login')
+    redirect("/login")
   }
 
   return (
-    <div className="container mx-auto p-4 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">ユーザー設定</h1>
-      <div className="mb-4">
-        <p><strong>名前:</strong> {session.user.name}</p>
-        <p><strong>メール:</strong> {session.user.email}</p>
-      </div>
-      <SignOut />
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold">ユーザー設定</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>プロフィール情報</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <p>
+              <strong>名前:</strong> {session.user.name}
+            </p>
+            <p>
+              <strong>メール:</strong> {session.user.email}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>アプリケーション設定</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="daily-reminder">デイリーリマインダー</Label>
+              <Switch id="daily-reminder" />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="sound-effects">効果音</Label>
+              <Switch id="sound-effects" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>アカウント管理</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <Button variant="outline">パスワードを変更</Button>
+            <SignOut />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
+

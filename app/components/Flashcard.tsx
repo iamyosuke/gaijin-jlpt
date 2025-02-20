@@ -1,19 +1,21 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import type { Word, Status, Example } from '@prisma/client'
+import { useState, useEffect } from "react"
+import { ChevronLeft, ChevronRight, Check, X, Volume2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import type { Word, Status, Example } from "@prisma/client"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface FlashcardProps {
-  levelId: string;
+  levelId: string
 }
 
-enum AnswerStatus {
+export enum AnswerStatus {
   Correct = "correct",
   Incorrect = "incorrect",
-  Skip = "skip"
+  Skip = "skip",
 }
 
 const getFlashcardData = async (id: string) => {
@@ -23,10 +25,10 @@ const getFlashcardData = async (id: string) => {
 }
 
 const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
-  await fetch('/api/v1/word-status', {
-    method: 'POST',
+  await fetch("/api/v1/word-status", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ wordId, isCorrect }),
   })
@@ -36,15 +38,22 @@ export default function Flashcard({ levelId }: FlashcardProps) {
   const [words, setWords] = useState<(Word & { examples: Example[]; wordStatus: { status: Status }[] })[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getFlashcardData(levelId)
-      setWords(data.words)
+      try {
+        const data = await getFlashcardData(levelId)
+        setWords(data.words)
+      } catch (error) {
+        console.error("Failed to fetch flashcard data:", error)
+      } finally {
+        setIsLoading(false)
+      }
     }
     fetchData()
   }, [levelId])
-  console.log(words);
+
   const currentWord = words[currentIndex]
 
   const handleNext = (status: AnswerStatus) => {
@@ -68,12 +77,24 @@ export default function Flashcard({ levelId }: FlashcardProps) {
     setShowAnswer(!showAnswer)
   }
 
+  const speakWord = () => {
+    const utterance = new SpeechSynthesisUtterance(currentWord.kanji || currentWord.furigana)
+    utterance.lang = "ja-JP"
+    speechSynthesis.speak(utterance)
+  }
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-64">Loading...</div>
+  }
+
   if (words.length === 0) {
-    return <div>Loading...</div>
+    return <div className="text-center">No words found for this level.</div>
   }
 
   return (
     <div className="flex flex-col items-center max-w-md mx-auto">
+      <Progress value={(currentIndex / words.length) * 100} className="w-full mb-4" />
+
       <div className="w-full mb-4 flex justify-between items-center">
         <Button variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0}>
           <ChevronLeft className="h-6 w-6" />
@@ -81,48 +102,73 @@ export default function Flashcard({ levelId }: FlashcardProps) {
         <span className="text-sm text-muted-foreground">
           {currentIndex + 1} / {words.length}
         </span>
-        <Button variant="ghost" onClick={() => handleNext(AnswerStatus.Skip)} disabled={currentIndex === words.length - 1}>
+        <Button
+          variant="ghost"
+          onClick={() => handleNext(AnswerStatus.Skip)}
+          disabled={currentIndex === words.length - 1}
+        >
           <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
 
-      <Card 
-        className="w-full aspect-[4/5] flex flex-col items-center justify-center p-6 cursor-pointer"
-        onClick={handleCardClick}
-      >
-        <div className="text-center space-y-4">
-          <h2 className="text-6xl mb-4">{currentWord.kanji}</h2>
-          <div className="space-y-1">
-            <p className="text-lg">{currentWord.furigana}</p>
-            <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
-          </div>
-          <p className="text-2xl font-medium">{currentWord.meaningEn}</p>
-
-          {currentWord.examples && currentWord.examples.length > 0 && (
-            <div className="mt-8 p-4 bg-muted rounded-lg">
-              {currentWord.examples.map((example) => (
-                <div key={example.id} className="mb-4">
-                  <p className="text-lg mb-2">{example.sentence}</p>
-                  <p className="text-muted-foreground">{example.meaningEn}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </Card>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.2 }}
+          className="w-full"
+        >
+          <Card
+            className="w-full aspect-[4/5] flex flex-col items-center justify-center p-6 cursor-pointer"
+            onClick={handleCardClick}
+          >
+            <CardContent className="text-center space-y-4">
+              <h2 className="text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
+              <div className="space-y-1">
+                <p className="text-lg">{currentWord.furigana}</p>
+                <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
+              </div>
+              {showAnswer && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <p className="text-2xl font-medium">{currentWord.meaningEn}</p>
+                  {currentWord.examples && currentWord.examples.length > 0 && (
+                    <div className="mt-8 p-4 bg-muted rounded-lg">
+                      {currentWord.examples.map((example) => (
+                        <div key={example.id} className="mb-4">
+                          <p className="text-lg mb-2">{example.sentence}</p>
+                          <p className="text-muted-foreground">{example.meaningEn}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
+      </AnimatePresence>
 
       <div className="flex gap-4 mt-6">
-        <Button 
-          size="lg" 
+        <Button
+          size="lg"
           variant="destructive"
           className="rounded-full w-16 h-16"
           onClick={() => handleNext(AnswerStatus.Incorrect)}
         >
           <X className="h-8 w-8" />
         </Button>
-        <Button 
-          size="lg" 
-          variant="default" 
+        <Button size="lg" variant="outline" className="rounded-full w-16 h-16" onClick={speakWord}>
+          <Volume2 className="h-8 w-8" />
+        </Button>
+        <Button
+          size="lg"
+          variant="default"
           className="rounded-full w-16 h-16 bg-green-500 hover:bg-green-600"
           onClick={() => handleNext(AnswerStatus.Correct)}
         >
@@ -132,3 +178,4 @@ export default function Flashcard({ levelId }: FlashcardProps) {
     </div>
   )
 }
+

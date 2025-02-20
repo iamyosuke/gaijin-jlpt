@@ -2,20 +2,27 @@ import { prisma } from "@/prisma"
 import Link from "next/link"
 import { auth } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { BookOpen, Trophy } from "lucide-react"
+import { AnswerStatus } from "./components/Flashcard"
 
 export default async function Home() {
   const session = await auth()
 
   if (!session) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
-        <Card className="w-full max-w-md p-6 text-center">
-          <h1 className="text-2xl font-bold mb-4">ログインが必要です</h1>
-          <p className="mb-4 text-gray-600">このページを表示するにはログインしてください。</p>
-          <Button asChild className="w-full">
-            <Link href="/login">ログインページへ</Link>
-          </Button>
+      <div className="flex min-h-screen flex-col items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>ログインが必要です</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-muted-foreground">このページを表示するにはログインしてください。</p>
+            <Button asChild className="w-full">
+              <Link href="/login">ログインページへ</Link>
+            </Button>
+          </CardContent>
         </Card>
       </div>
     )
@@ -23,32 +30,53 @@ export default async function Home() {
 
   const levels = await prisma.level.findMany({
     orderBy: { order: "asc" },
+    include: {
+      words: {
+        include: {
+          wordStatus: {
+            where: { userId: session.user.id },
+          },
+        },
+      },
+    },
   })
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <main className="flex-1 container max-w-md mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-6 text-center">Learning Levels</h1>
-        <div className="space-y-4">
-          {levels.map((level, index) => (
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold text-center">Learning Levels</h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {levels.map((level) => {
+          const totalWords = level.words.length
+          const learnedWords = level.words.filter(
+            (word) => word.wordStatus.length > 0 && word.wordStatus[0].status === AnswerStatus.Correct,
+          ).length
+          const progress = totalWords > 0 ? (learnedWords / totalWords) * 100 : 0
+
+          return (
             <Link key={level.id} href={`/level/${level.id}`}>
-              <Card
-                className={`p-6 transition-transform hover:scale-[1.02] ${
-                  index === 0 ? "bg-blue-500 text-white" : "bg-gray-500 text-white"
-                }`}
-              >
-                <h2 className="text-2xl font-bold text-center mb-2">Level {level.order}</h2>
-                <p className="text-xl text-center mb-1">{index === 0 ? "Beginner" : "Elementary"}</p>
-                <p className="text-center text-sm opacity-90">
-                  {index === 0 ? "Basic everyday words" : "Common expressions"}
-                </p>
+              <Card className="h-full transition-transform hover:scale-[1.02]">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    <span>Level {level.order}</span>
+                    {progress === 100 && <Trophy className="text-yellow-500" />}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-xl mb-2">{level.name}</p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {learnedWords} / {totalWords} words learned
+                  </p>
+                  <Progress value={progress} className="h-2" />
+                  <div className="mt-4 flex items-center text-sm text-muted-foreground">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    <span>{totalWords} words</span>
+                  </div>
+                </CardContent>
               </Card>
             </Link>
-          ))}
-        </div>
-      </main>
-
-  
+          )
+        })}
+      </div>
     </div>
   )
 }

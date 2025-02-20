@@ -1,14 +1,15 @@
+
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import Footer from "./components/Footer"
 import { SessionProvider } from "next-auth/react"
-
+import Footer from "./components/Footer"
+import { ThemeProvider } from "@/components/ui/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Language Learning Flashcards",
+  title: "Language Learning App",
   description: "Learn languages with flashcards",
 }
 
@@ -19,11 +20,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-blue-500 min-h-screen`}>
-        <SessionProvider>
-          {children}
-          <Footer />
-        </SessionProvider>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SessionProvider>
+            <div className="min-h-screen  bg-background">
+              <main className="container mx-auto p-4">{children}</main>
+            <Footer />
+            </div>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
