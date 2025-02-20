@@ -1,6 +1,5 @@
 import { auth } from "@/auth"
 import { prisma } from "@/prisma"
-import { getSession } from "next-auth/react"
 
 export const getLevels = async () => {
   const session = await auth()

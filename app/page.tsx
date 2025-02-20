@@ -38,7 +38,7 @@ export default async function Home() {
           const totalWords = level.words.length
           
           const learnedWords = level.words.filter(
-            (word) => word.wordStatus.some((status) => status.status === "learned")
+            (word) => word.wordStatus.some((status) => status.status === AnswerStatus.Correct)
           ).length
           const progress = totalWords > 0 ? (learnedWords / totalWords) * 100 : 0
           return (
