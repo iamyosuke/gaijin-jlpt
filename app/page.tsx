@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { BookOpen, Trophy } from "lucide-react"
-import { AnswerStatus } from "./components/Flashcard"
 import { getLevels } from "@/lib/levels"
 
 export default async function Home() {
