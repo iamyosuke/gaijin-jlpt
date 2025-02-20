@@ -25,8 +25,8 @@ export default function RootLayout({
           <SessionProvider>
             <div className="min-h-screen  bg-background">
               <main className="container mx-auto p-4">{children}</main>
-            <Footer />
             </div>
+            <Footer />
           </SessionProvider>
         </ThemeProvider>
       </body>
