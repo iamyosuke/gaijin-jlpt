@@ -1,4 +1,3 @@
-import { prisma } from "@/prisma"
 import Link from "next/link"
 import { auth } from "@/auth"
 import { Button } from "@/components/ui/button"
@@ -37,11 +36,11 @@ export default async function Home() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {levels.map((level) => {
           const totalWords = level.words.length
+          
           const learnedWords = level.words.filter(
-            (word) => word.wordStatus.length > 0 && word.wordStatus[0].status === AnswerStatus.Correct,
+            (word) => word.wordStatus.some((status) => status.status === "learned")
           ).length
           const progress = totalWords > 0 ? (learnedWords / totalWords) * 100 : 0
-
           return (
             <Link key={level.id} href={`/level/${level.id}`}>
               <Card className="h-full transition-transform hover:scale-[1.02]">
