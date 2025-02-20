@@ -34,7 +34,7 @@ export default async function Home() {
       words: {
         include: {
           wordStatus: {
-            where: { userId: session.user.id },
+            where: { userId: session.user?.id },
           },
         },
       },

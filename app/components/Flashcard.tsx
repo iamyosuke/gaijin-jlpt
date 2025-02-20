@@ -13,8 +13,8 @@ interface FlashcardProps {
 }
 
 export enum AnswerStatus {
-  Correct = "correct",
-  Incorrect = "incorrect",
+  Correct = "learned",
+  Incorrect = "learning",
   Skip = "skip",
 }
 
