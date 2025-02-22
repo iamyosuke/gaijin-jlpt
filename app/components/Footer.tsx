@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation"
 
 export default function Footer() {
   const pathname = usePathname()
+  if (pathname.includes('/level')) {
+    return null
+  }
   return (
     <footer className="sticky bottom-0 border-t bg-white py-4">
       <div className="container max-w-md mx-auto flex justify-around items-center">

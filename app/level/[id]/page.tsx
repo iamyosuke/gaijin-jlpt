@@ -12,9 +12,9 @@ export default async function LevelPage({ params }: { params: Promise<{ id: stri
   const resolvedParams = await params; // 非同期で解決
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{resolvedParams.id}</h1>
-      <Flashcard levelId={resolvedParams.id} />
-    </div>
+        <div className="container mx-auto p-4" >
+          <h1 className="text-2xl font-bold mb-4">{resolvedParams.id}</h1>
+          <Flashcard levelId={resolvedParams.id} />
+        </div>
   );
 }
