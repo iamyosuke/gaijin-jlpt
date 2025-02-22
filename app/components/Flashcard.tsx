@@ -84,76 +84,77 @@ export default function Flashcard({ levelId }: FlashcardProps) {
   }
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-64">Loading...</div>
+    return <div className="flex justify-center items-center h-full">Loading...</div>
   }
 
   if (words.length === 0) {
-    return <div className="text-center">No words found for this level.</div>
+    return <div className="flex justify-center items-center h-full">No words found for this level.</div>
   }
 
   return (
-    <div className="flex flex-col items-center max-w-md mx-auto">
-      <Progress value={words.length > 0 ? ((currentIndex + 1) / words.length) * 100 : 0} className="w-full mb-4" />
-      <div className="w-full mb-4 flex justify-between items-center">
-        <Button variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0}>
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <span className="text-sm text-muted-foreground">
-          {currentIndex + 1} / {words.length}
-        </span>
-        <Button
-          variant="ghost"
-          onClick={() => handleNext(AnswerStatus.Skip)}
-          disabled={currentIndex === words.length - 1}
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.2 }}
-          className="w-full"
-        >
-          <Card
-            className="w-full aspect-[4/5] flex flex-col items-center justify-center p-6 cursor-pointer"
-            onClick={handleCardClick}
+    <div className="flex flex-col h-full">
+      <Progress value={words.length > 0 ? ((currentIndex + 1) / words.length) * 100 : 0} className="w-full" />
+      <div className="flex-1 flex flex-col p-4">
+        <div className="w-full mb-4 flex justify-between items-center">
+          <Button variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0}>
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {currentIndex + 1} / {words.length}
+          </span>
+          <Button
+            variant="ghost"
+            onClick={() => handleNext(AnswerStatus.Skip)}
+            disabled={currentIndex === words.length - 1}
           >
-            <CardContent className="text-center space-y-4">
-              <h2 className="text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
-              <div className="space-y-1">
-                <p className="text-lg">{currentWord.furigana}</p>
-                <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
-              </div>
-              {showAnswer && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <p className="text-2xl font-medium">{currentWord.meaningEn}</p>
-                  {currentWord.examples && currentWord.examples.length > 0 && (
-                    <div className="mt-8 p-4 bg-muted rounded-lg">
-                      {currentWord.examples.map((example) => (
-                        <div key={example.id} className="mb-4">
-                          <p className="text-lg mb-2">{example.sentence}</p>
-                          <p className="text-muted-foreground">{example.meaningEn}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      </AnimatePresence>
+            <ChevronRight className="h-6 w-6" />
+          </Button>
+        </div>
 
-      <div className="flex gap-4 mt-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="flex-1 flex items-center justify-center"
+          >
+            <Card
+              className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer overflow-auto"
+              onClick={handleCardClick}
+            >
+              <CardContent className="text-center space-y-4">
+                <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
+                <div className="space-y-1">
+                  <p className="text-lg">{currentWord.furigana}</p>
+                  <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
+                </div>
+                {showAnswer && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <p className="text-xl sm:text-2xl font-medium">{currentWord.meaningEn}</p>
+                    {currentWord.examples && currentWord.examples.length > 0 && (
+                      <div className="mt-4 p-4 bg-muted rounded-lg">
+                        {currentWord.examples.map((example) => (
+                          <div key={example.id} className="mb-4">
+                            <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
+                            <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </AnimatePresence>
+
+      <div className="flex justify-center gap-4 mt-6">
         <Button
           size="lg"
           variant="destructive"
@@ -173,6 +174,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
         >
           <Check className="h-8 w-8" />
         </Button>
+        </div>
       </div>
     </div>
   )
