@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import type { Word, Status, Example } from "@prisma/client"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 interface FlashcardProps {
   levelId: string
@@ -111,69 +111,71 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           </Button>
         </div>
 
-        <AnimatePresence mode="wait">
+        <div className="flex-1 flex items-center justify-center perspective-1000">
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="flex-1 flex items-center justify-center"
+            className="w-full h-full relative"
+            initial={false}
+            animate={{ rotateY: showAnswer ? 180 : 0 }}
+            transition={{ duration: 0.6 }}
+            onClick={handleCardClick}
           >
-            <Card
-              className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer overflow-auto"
-              onClick={handleCardClick}
-            >
-              <CardContent className="text-center space-y-4">
+            <Card className="w-full h-full absolute backface-hidden cursor-pointer">
+              <CardContent className="flex flex-col items-center justify-center h-full text-center p-6">
                 <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
                 <div className="space-y-1">
                   <p className="text-lg">{currentWord.furigana}</p>
                   <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
                 </div>
-                {showAnswer && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <p className="text-xl sm:text-2xl font-medium">{currentWord.meaningEn}</p>
-                    {currentWord.examples && currentWord.examples.length > 0 && (
-                      <div className="mt-4 p-4 bg-muted rounded-lg">
-                        {currentWord.examples.map((example) => (
-                          <div key={example.id} className="mb-4">
-                            <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
-                            <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
-                          </div>
-                        ))}
+              </CardContent>
+            </Card>
+
+            <Card className="w-full h-full absolute backface-hidden cursor-pointer [transform:rotateY(180deg)]">
+              <CardContent className="flex flex-col items-center justify-center h-full text-center p-6 overflow-y-auto">
+                <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meaningEn}</p>
+                {currentWord.imageUrl && (
+                  <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={currentWord.imageUrl || "/placeholder.svg"}
+                      alt={currentWord.kanji || currentWord.furigana}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                {currentWord.examples && currentWord.examples.length > 0 && (
+                  <div className="w-full mt-4 p-4 bg-muted rounded-lg">
+                    {currentWord.examples.map((example) => (
+                      <div key={example.id} className="mb-4">
+                        <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
+                        <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
                       </div>
-                    )}
-                  </motion.div>
+                    ))}
+                  </div>
                 )}
               </CardContent>
             </Card>
           </motion.div>
-        </AnimatePresence>
+        </div>
 
-      <div className="flex justify-center gap-4 mt-6">
-        <Button
-          size="lg"
-          variant="destructive"
-          className="rounded-full w-16 h-16"
-          onClick={() => handleNext(AnswerStatus.Incorrect)}
-        >
-          <X className="h-8 w-8" />
-        </Button>
-        <Button size="lg" variant="outline" className="rounded-full w-16 h-16" onClick={speakWord}>
-          <Volume2 className="h-8 w-8" />
-        </Button>
-        <Button
-          size="lg"
-          variant="default"
-          className="rounded-full w-16 h-16 bg-green-500 hover:bg-green-600"
-          onClick={() => handleNext(AnswerStatus.Correct)}
-        >
-          <Check className="h-8 w-8" />
-        </Button>
+        <div className="flex justify-center gap-4 mt-6">
+          <Button
+            size="lg"
+            variant="destructive"
+            className="rounded-full w-16 h-16"
+            onClick={() => handleNext(AnswerStatus.Incorrect)}
+          >
+            <X className="h-8 w-8" />
+          </Button>
+          <Button size="lg" variant="outline" className="rounded-full w-16 h-16" onClick={speakWord}>
+            <Volume2 className="h-8 w-8" />
+          </Button>
+          <Button
+            size="lg"
+            variant="default"
+            className="rounded-full w-16 h-16 bg-green-500 hover:bg-green-600"
+            onClick={() => handleNext(AnswerStatus.Correct)}
+          >
+            <Check className="h-8 w-8" />
+          </Button>
         </div>
       </div>
     </div>

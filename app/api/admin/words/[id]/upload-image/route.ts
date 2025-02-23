@@ -27,13 +27,17 @@ export async function POST(request: Request) {
       throw error;
     }
 
+    // 公開URLを取得
+    const { data: publicData } = supabase.storage.from('images').getPublicUrl(data.path);
+    const imageUrl = publicData.publicUrl;
+
     // データベースを更新
     await prisma.word.update({
       where: { id: wordId },
-      data: { imageUrl: data?.path },
+      data: { imageUrl },
     });
 
-    return NextResponse.json({ success: true, imageUrl: data?.path });
+    return NextResponse.json({ success: true, imageUrl });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });

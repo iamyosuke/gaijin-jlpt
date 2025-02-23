@@ -347,9 +347,9 @@ export default function AdminPage() {
                                     ))}
                                   </TableCell>
                                   <TableCell>
-                                    {imageUrls[word.id] && (
+                                    {word.imageUrl && (
                                       <Image
-                                        src={imageUrls[word.id] as string}
+                                        src={word.imageUrl}
                                         alt={word.kanji || word.furigana}
                                         width={100}
                                         height={100}
