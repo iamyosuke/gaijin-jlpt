@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 実装する必要のあるタスク
 
-## Getting Started
+1. **フラッシュカードでのイメージ表示**
+   - フラッシュカードに関連するイメージを表示できるようにする。
 
-First, run the development server:
+2. **有料サブスクライブ機能の追加**
+   - Stripeを使用して有料サブスクリプション機能を実装する。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+3. **ユーザーダッシュボードの作成**
+   - ユーザーが連続学習記録、フラッシュカードの進捗、学習した単語数を確認できるダッシュボードを作成する。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. **AIを使った単語のバッチ処理追加**
+   - AIを活用して単語を自動的にバッチ処理で追加する機能を実装する。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+5. **多国語対応**
+   - アプリケーションを多国語対応にする。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+6. **学習完了画面**
+   - レベルの単語を学習し終えたら学習完了画面を作成する。
 
-## Learn More
+7. **復習機能**
+   - 学習した単語を復習できる機能を実装する。
 
-To learn more about Next.js, take a look at the following resources:
+## その他の考慮すべき機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **ユーザーインターフェースの改善**
+  - ユーザーエクスペリエンスを向上させるためのUI/UXの改善。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **パフォーマンスの最適化**
+  - アプリケーションのパフォーマンスを向上させるための最適化。
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **セキュリティの強化**
+  - ユーザーデータの保護を強化するためのセキュリティ対策。

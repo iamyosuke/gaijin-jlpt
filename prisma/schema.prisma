@@ -84,6 +84,7 @@ model Word {
   romaji     String?
   meaningEn  String
   audioUrl   String?
+  imageUrl   String?
   examples   Example[]
   wordStatus UserWordStatus[]
   createdAt  DateTime @default(now())
