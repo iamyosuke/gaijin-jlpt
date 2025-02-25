@@ -37,7 +37,7 @@ const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
 export default function Flashcard({ levelId }: FlashcardProps) {
   const [words, setWords] = useState<(Word & { examples: Example[]; wordStatus: { status: Status }[] })[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [showAnswer, setShowAnswer] = useState(false)
+  const [isFlipped, setIsFlipped] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -62,19 +62,19 @@ export default function Flashcard({ levelId }: FlashcardProps) {
     }
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
-      setShowAnswer(false)
+      setIsFlipped(false)
     }
   }
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1)
-      setShowAnswer(false)
+      setIsFlipped(false)
     }
   }
 
   const handleCardClick = () => {
-    setShowAnswer(!showAnswer)
+    setIsFlipped(!isFlipped)
   }
 
   const speakWord = () => {
@@ -115,41 +115,46 @@ export default function Flashcard({ levelId }: FlashcardProps) {
           <motion.div
             className="w-full h-full relative"
             initial={false}
-            animate={{ rotateY: showAnswer ? 180 : 0 }}
+            animate={{ rotateY: isFlipped ? 180 : 0 }}
             transition={{ duration: 0.6 }}
             onClick={handleCardClick}
           >
-            <Card className="w-full h-full absolute backface-hidden cursor-pointer">
+            <Card
+              className={`w-full h-full absolute cursor-pointer ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}
+              onClick={handleCardClick}
+            >
               <CardContent className="flex flex-col items-center justify-center h-full text-center p-6">
-                <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
-                <div className="space-y-1">
-                  <p className="text-lg">{currentWord.furigana}</p>
-                  <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="w-full h-full absolute backface-hidden cursor-pointer [transform:rotateY(180deg)]">
-              <CardContent className="flex flex-col items-center justify-center h-full text-center p-6 overflow-y-auto">
-                <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meaningEn}</p>
-                {currentWord.imageUrl && (
-                  <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={currentWord.imageUrl || "/placeholder.svg"}
-                      alt={currentWord.kanji || currentWord.furigana}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                {currentWord.examples && currentWord.examples.length > 0 && (
-                  <div className="w-full mt-4 p-4 bg-muted rounded-lg">
-                    {currentWord.examples.map((example) => (
-                      <div key={example.id} className="mb-4">
-                        <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
-                        <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
+                {!isFlipped ? (
+                  <>
+                    <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
+                    <div className="space-y-1">
+                      <p className="text-lg">{currentWord.furigana}</p>
+                      <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meaningEn}</p>
+                    {currentWord.imageUrl && (
+                      <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
+                        <img
+                          src={currentWord.imageUrl || "/placeholder.svg"}
+                          alt={currentWord.kanji || currentWord.furigana}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    ))}
-                  </div>
+                    )}
+                    {currentWord.examples && currentWord.examples.length > 0 && (
+                      <div className="w-full mt-4 p-4 bg-muted rounded-lg">
+                        {currentWord.examples.map((example: Example) => (
+                          <div key={example.id} className="mb-4">
+                            <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
+                            <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </CardContent>
             </Card>
