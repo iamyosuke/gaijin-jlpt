@@ -28,7 +28,7 @@ export default function AdminPage() {
   const [expandedLevels, setExpandedLevels] = useState<number[]>([])
   const [editingLevel, setEditingLevel] = useState<number | null>(null)
   const [newLevelName, setNewLevelName] = useState("")
-  const [imageUrls, setImageUrls] = useState<{ [key: number]: string | null }>({})
+  // const [imageUrls, setImageUrls] = useState<{ [key: number]: string | null }>({})
 
   useEffect(() => {
     fetchLevels()
@@ -44,7 +44,7 @@ export default function AdminPage() {
           }
         }
       }
-      setImageUrls(urls)
+      // setImageUrls(urls)
     }
 
     fetchImageUrls()

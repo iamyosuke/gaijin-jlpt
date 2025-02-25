@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import type { Word, Status, Example } from "@prisma/client"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 interface FlashcardProps {
   levelId: string
@@ -137,10 +138,13 @@ export default function Flashcard({ levelId }: FlashcardProps) {
                     <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meaningEn}</p>
                     {currentWord.imageUrl && (
                       <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
-                        <img
+                        <Image
                           src={currentWord.imageUrl || "/placeholder.svg"}
                           alt={currentWord.kanji || currentWord.furigana}
-                          className="w-full h-full object-cover"
+                          layout="responsive"
+                          width={100}
+                          height={100}
+                          objectFit="cover"
                         />
                       </div>
                     )}
