@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { SignOut } from "../components/signout-button"
+import CustomerPortalButton from "../components/CustomerPortalButton"
 
 export default async function SettingsPage() {
   const session = await auth()
@@ -58,6 +59,7 @@ export default async function SettingsPage() {
           <div className="space-y-4">
             <Button variant="outline">パスワードを変更</Button>
             <SignOut />
+            <CustomerPortalButton />
           </div>
         </CardContent>
       </Card>

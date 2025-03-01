@@ -55,6 +55,9 @@ model User {
   wordStatus    UserWordStatus[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  customerId    String?   @unique // Stripeの顧客IDを保存するフィールド
+  priceId       String?   // Stripeの価格IDを保存するフィールド
+  hasAccess     Boolean   @default(false) // アクセス権を示すフィールド
   @@map("users")
 }
  
