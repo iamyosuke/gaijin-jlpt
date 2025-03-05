@@ -6,14 +6,22 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { SignOut } from "../components/signout-button"
 import CustomerPortalButton from "../components/CustomerPortalButton"
+import { sendMail } from "@/lib/mailer"
 
 export default async function SettingsPage() {
   const session = await auth()
 
   if (!session || !session.user) {
-    redirect("/login")
+    redirect("/login"
+    )
   }
 
+  // // メール送信関数
+  // try {
+  //   await sendMail(session.user.email as string, "テストメール", "これはテストメールです。");
+  // } catch (error) {
+  //   console.error('エラーが発生しました: ', error);
+  // }
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">ユーザー設定</h1>
