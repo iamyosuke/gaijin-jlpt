@@ -6,7 +6,6 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { SignOut } from "../components/signout-button"
 import CustomerPortalButton from "../components/CustomerPortalButton"
-import { sendMail } from "@/lib/mailer"
 
 export default async function SettingsPage() {
   const session = await auth()
