@@ -1,0 +1,16 @@
+{
+  "Home": {
+    "login_required": "Login Required",
+    "login_message": "Please log in to view this page.",
+    "login_page": "Go to Login Page",
+    "learning_levels": "Learning Levels",
+    "words_learned": "{learnedWords} / {totalWords} words learned",
+    "total_words": "{totalWords} words"
+  },
+  "Login": {
+    "welcome": "Welcome",
+    "login_message": "Please log in to view this page.",
+    "login_with_google": "Login with Google",
+    "login_page": "Go to Login Page"
+  }
+}

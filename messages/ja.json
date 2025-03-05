@@ -1,0 +1,16 @@
+{
+  "Home": {
+    "login_required": "ログインが必要です",
+    "login_message": "このページを表示するにはログインしてください。",
+    "login_page": "ログインページへ",
+    "learning_levels": "学習レベル",
+    "words_learned": "{learnedWords} / {totalWords} 語を学習済み",
+    "total_words": "{totalWords} 語"
+  },
+  "Login": {
+    "welcome": "ようこそ",
+    "login_message": "このページを表示するにはログインしてください。",
+    "login_with_google": "Googleでログイン",
+    "login_page": "ログインページへ"
+  }
+}
