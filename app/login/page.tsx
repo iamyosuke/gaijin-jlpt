@@ -12,10 +12,10 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            {t('welcome')}
+            {t('welcome_to_flashcard_app')}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            {t('login_message')}
+            {t('login_to_continue')}
           </p>
         </div>
         <div className="mt-8">

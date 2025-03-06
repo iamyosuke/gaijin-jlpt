@@ -6,10 +6,12 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { SignOut } from "../components/signout-button"
 import CustomerPortalButton from "../components/CustomerPortalButton"
+import { getTranslations } from 'next-intl/server';
 
 export default async function SettingsPage() {
   const session = await auth()
-
+  const t = await getTranslations('Settings')
+  
   if (!session || !session.user) {
     redirect("/login"
     )
@@ -23,18 +25,18 @@ export default async function SettingsPage() {
   // }
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">ユーザー設定</h1>
+      <h1 className="text-3xl font-bold">{t('user_settings')}</h1>
       <Card>
         <CardHeader>
-          <CardTitle>プロフィール情報</CardTitle>
+          <CardTitle>{t('profile_information')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             <p>
-              <strong>名前:</strong> {session.user.name}
+              <strong>{t('name')}:</strong> {session.user.name}
             </p>
             <p>
-              <strong>メール:</strong> {session.user.email}
+              <strong>{t('email')}:</strong> {session.user.email}
             </p>
           </div>
         </CardContent>
@@ -42,16 +44,16 @@ export default async function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>アプリケーション設定</CardTitle>
+          <CardTitle>{t('application_settings')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <Label htmlFor="daily-reminder">デイリーリマインダー</Label>
+              <Label htmlFor="daily-reminder">{t('daily_reminder')}</Label>
               <Switch id="daily-reminder" />
             </div>
             <div className="flex items-center justify-between">
-              <Label htmlFor="sound-effects">効果音</Label>
+              <Label htmlFor="sound-effects">{t('sound_effects')}</Label>
               <Switch id="sound-effects" />
             </div>
           </div>
@@ -60,11 +62,11 @@ export default async function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>アカウント管理</CardTitle>
+          <CardTitle>{t('account_management')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <Button variant="outline">パスワードを変更</Button>
+            <Button variant="outline">{t('change_password')}</Button>
             <SignOut />
             <CustomerPortalButton />
           </div>

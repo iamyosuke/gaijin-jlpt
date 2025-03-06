@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress"
 import type { Word, Status, Example } from "@prisma/client"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useTranslations } from 'next-intl';
 
 interface FlashcardProps {
   levelId: string
@@ -36,6 +37,7 @@ const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
 }
 
 export default function Flashcard({ levelId }: FlashcardProps) {
+  const t = useTranslations('Flashcard')
   const [words, setWords] = useState<(Word & { examples: Example[]; wordStatus: { status: Status }[] })[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
@@ -85,11 +87,11 @@ export default function Flashcard({ levelId }: FlashcardProps) {
   }
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-full">Loading...</div>
+    return <div className="flex justify-center items-center h-full">{t('loading')}</div>
   }
 
   if (words.length === 0) {
-    return <div className="flex justify-center items-center h-full">No words found for this level.</div>
+    return <div className="flex justify-center items-center h-full">{t('no_words_found')}</div>
   }
 
   return (

@@ -8,9 +8,53 @@
     "total_words": "{totalWords} words"
   },
   "Login": {
-    "welcome": "Welcome",
-    "login_message": "Please log in to view this page.",
+    "welcome_to_flashcard_app": "Welcome to Flashcard App",
+    "login_to_continue": "Please log in to continue.",
     "login_with_google": "Login with Google",
     "login_page": "Go to Login Page"
+  },
+  "Settings": {
+    "user_settings": "User Settings",
+    "profile_information": "Profile Information",
+    "application_settings": "Application Settings",
+    "account_management": "Account Management",
+    "change_password": "Change Password",
+    "daily_reminder": "Daily Reminder",
+    "sound_effects": "Sound Effects",
+    "name": "Name",
+    "email": "Email"
+  },
+  "Flashcard": {
+    "loading": "Loading...",
+    "no_words_found": "No words found for this level."
+  },
+  "Admin": {
+    "csv_upload": "CSV Upload",
+    "image_upload": "Image Upload",
+    "add_level": "Add Level",
+    "image": "Image",
+    "operation": "Operation",
+    "word": "Word",
+    "furigana": "Furigana",
+    "romaji": "Romaji",
+    "meaning": "Meaning",
+    "example": "Example",
+    "select_file": "Please select a file.",
+    "select_image_file": "Please select an image file.",
+    "image_uploaded_successfully": "Image uploaded successfully.",
+    "image_upload_failed": "Image upload failed.",
+    "data_uploaded_successfully": "Data uploaded successfully.",
+    "upload_failed": "Upload failed.",
+    "confirm_delete_level": "Are you sure you want to delete this level?",
+    "delete_failed": "Delete failed.",
+    "delete_level_failed": "Level delete failed.",
+    "add_level_failed": "Level add failed.",
+    "update_level_failed": "Level update failed.",
+    "reorder_level_failed": "Level reorder failed.",
+    "delete_word_failed": "Word delete failed."
+  },
+  "CustomerPortalButton": {
+    "manage_subscription": "Manage Subscription"
   }
 }
+

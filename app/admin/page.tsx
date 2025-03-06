@@ -12,6 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import Image from "next/image"
 import { getImageUrl } from "@/lib/supabase"
+import { useTranslations } from 'next-intl';
 
 interface WordWithExamples extends Word {
   examples: Example[]
@@ -22,6 +23,7 @@ interface LevelWithWords extends Level {
 }
 
 export default function AdminPage() {
+  const t = useTranslations('Admin')
   const [levels, setLevels] = useState<LevelWithWords[]>([])
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -65,7 +67,7 @@ export default function AdminPage() {
   const handleImageUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!file) {
-      setError("画像ファイルを選択してください。")
+      setError(`${t('select_image_file')}`)
       return
     }
 
@@ -78,17 +80,17 @@ export default function AdminPage() {
     })
 
     if (response.ok) {
-      alert("画像が正常にアップロードされました。")
+      alert(`${t('image_uploaded_successfully')}`)
       fetchLevels()
     } else {
-      setError("画像のアップロードに失敗しました。")
+      setError(`${t('image_upload_failed')}`)
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!file) {
-      setError("ファイルを選択してください。")
+      setError(`${t('select_file')}`)
       return
     }
 
@@ -101,10 +103,10 @@ export default function AdminPage() {
     })
 
     if (response.ok) {
-      alert("データが正常にアップロードされました。")
+      alert(`${t('data_uploaded_successfully')}`)
       fetchLevels()
     } else {
-      setError("アップロードに失敗しました。")
+      setError(`${t('upload_failed')}`)
     }
   }
 
@@ -121,12 +123,12 @@ export default function AdminPage() {
         })),
       )
     } else {
-      alert("削除に失敗しました。")
+      alert(`${t('delete_failed')}`)
     }
   }
 
   const handleDeleteLevel = async (levelId: number) => {
-    if (!confirm("このレベルを削除してもよろしいですか？")) return
+    if (!confirm(`${t('confirm_delete_level')}`)) return
 
     const response = await fetch(`/api/admin/levels/${levelId}`, {
       method: "DELETE",
@@ -135,7 +137,7 @@ export default function AdminPage() {
     if (response.ok) {
       setLevels((prevLevels) => prevLevels.filter((level) => level.id !== levelId))
     } else {
-      alert("レベルの削除に失敗しました。")
+      alert(`${t('delete_level_failed')}`)
     }
   }
 
@@ -156,7 +158,7 @@ export default function AdminPage() {
       setLevels([...levels, newLevel])
       setNewLevelName("")
     } else {
-      alert("レベルの追加に失敗しました。")
+      alert(`${t('add_level_failed')}`)
     }
   }
 
@@ -171,7 +173,7 @@ export default function AdminPage() {
       setLevels((prevLevels) => prevLevels.map((level) => (level.id === levelId ? { ...level, name: newName } : level)))
       setEditingLevel(null)
     } else {
-      alert("レベルの更新に失敗しました。")
+      alert(`${t('update_level_failed')}`)
     }
   }
 
@@ -198,7 +200,7 @@ export default function AdminPage() {
     })
 
     if (!response.ok) {
-      alert("レベルの並び替えに失敗しました。")
+      alert(`${t('reorder_level_failed')}`)
       fetchLevels() // Revert to original order
     }
   }
@@ -213,10 +215,10 @@ export default function AdminPage() {
     })
 
     if (response.ok) {
-      alert("画像が正常にアップロードされました。")
+      alert(`${t('image_uploaded_successfully')}`)
       fetchLevels()
     } else {
-      alert("画像のアップロードに失敗しました。")
+      alert(`${t('image_upload_failed')}`)
     }
   }
 
@@ -235,12 +237,12 @@ export default function AdminPage() {
           <Input type="file" accept=".csv" onChange={handleFileChange} className="max-w-xs" />
           <Button onClick={handleSubmit} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
-            CSVアップロード
+            {t('csv_upload')}
           </Button>
           <Input type="file" accept="image/*" onChange={handleFileChange} className="max-w-xs" />
           <Button onClick={handleImageUpload} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
-            画像アップロード
+            {t('image_upload')}
           </Button>
         </div>
       </div>
@@ -256,7 +258,7 @@ export default function AdminPage() {
         />
         <Button onClick={handleAddLevel}>
           <Plus className="mr-2 h-4 w-4" />
-          レベルを追加
+          {t('add_level')}
         </Button>
       </div>
 
@@ -322,13 +324,13 @@ export default function AdminPage() {
                           <Table>
                             <TableHeader>
                               <TableRow>
-                                <TableHead>単語</TableHead>
-                                <TableHead>ふりがな</TableHead>
-                                <TableHead>ローマ字</TableHead>
-                                <TableHead>意味</TableHead>
-                                <TableHead>例文</TableHead>
-                                <TableHead>画像</TableHead>
-                                <TableHead className="w-[100px]">操作</TableHead>
+                                <TableHead>{t('word')}</TableHead>
+                                <TableHead>{t('furigana')}</TableHead>
+                                <TableHead>{t('romaji')}</TableHead>
+                                <TableHead>{t('meaning')}</TableHead>
+                                <TableHead>{t('example')}</TableHead>
+                                <TableHead>{t('image')}</TableHead>
+                                <TableHead className="w-[100px]">{t('operation')}</TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>

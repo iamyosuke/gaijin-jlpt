@@ -1,16 +1,57 @@
 {
   "Home": {
-    "login_required": "ログインが必要です",
-    "login_message": "このページを表示するにはログインしてください。",
     "login_page": "ログインページへ",
     "learning_levels": "学習レベル",
     "words_learned": "{learnedWords} / {totalWords} 語を学習済み",
     "total_words": "{totalWords} 語"
   },
   "Login": {
-    "welcome": "ようこそ",
-    "login_message": "このページを表示するにはログインしてください。",
+    "welcome_to_flashcard_app": "フラッシュカードアプリへようこそ",
+    "login_to_continue": "続けるにはログインしてください。",
     "login_with_google": "Googleでログイン",
     "login_page": "ログインページへ"
+  },
+  "Settings": {
+    "user_settings": "ユーザー設定",
+    "profile_information": "プロフィール情報",
+    "application_settings": "アプリケーション設定",
+    "account_management": "アカウント管理",
+    "change_password": "パスワードを変更",
+    "daily_reminder": "デイリーリマインダー",
+    "sound_effects": "効果音",
+    "name": "名前",
+    "email": "メール"
+  },
+  "Flashcard": {
+    "loading": "読み込み中...",
+    "no_words_found": "このレベルの単語は見つかりませんでした。",
+  },
+  "Admin": {
+    "csv_upload": "CSVアップロード",
+    "image_upload": "画像アップロード",
+    "add_level": "レベルを追加",
+    "image": "画像",
+    "operation": "操作",
+    "word": "単語",
+    "furigana": "ふりがな",
+    "romaji": "ローマ字",
+    "meaning": "意味",
+    "example": "例文",
+    "select_file": "ファイルを選択してください。",
+    "select_image_file": "画像ファイルを選択してください。",
+    "image_uploaded_successfully": "画像が正常にアップロードされました。",
+    "image_upload_failed": "画像のアップロードに失敗しました。",
+    "data_uploaded_successfully": "データが正常にアップロードされました。",
+    "upload_failed": "アップロードに失敗しました。",
+    "confirm_delete_level": "このレベルを削除してもよろしいですか？",
+    "delete_failed": "削除に失敗しました。",
+    "delete_level_failed": "レベルの削除に失敗しました。",
+    "add_level_failed": "レベルの追加に失敗しました。",
+    "update_level_failed": "レベルの更新に失敗しました。",
+    "reorder_level_failed": "レベルの並び替えに失敗しました。",
+    "delete_word_failed": "単語の削除に失敗しました。",
+  },
+  "CustomerPortalButton": {
+    "manage_subscription": "サブスクリプションを管理"
   }
 }
