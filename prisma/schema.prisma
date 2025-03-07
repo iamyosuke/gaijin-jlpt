@@ -58,6 +58,8 @@ model User {
   customerId    String?   @unique // Stripeの顧客IDを保存するフィールド
   priceId       String?   // Stripeの価格IDを保存するフィールド
   hasAccess     Boolean   @default(false) // アクセス権を示すフィールド
+  userLanguage  Language? @relation(fields: [languageId], references: [id])
+  languageId    Int?     
   @@map("users")
 }
  
@@ -82,16 +84,36 @@ model Word {
   id         Int      @id @default(autoincrement())
   level      Level    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   levelId    Int
-  kanji      String?
-  furigana   String
+  text       String
+  furigana   String?
   romaji     String?
-  meaningEn  String
-  audioUrl   String?
   imageUrl   String?
   examples   Example[]
   wordStatus UserWordStatus[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  meanings   Meaning[]
+}
+
+model Meaning {
+  id         Int      @id @default(autoincrement())
+  word       Word?    @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  wordId     Int?
+  example    Example? @relation(fields: [exampleId], references: [id], onDelete: Cascade)
+  exampleId  Int?
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  languageId Int
+  meaning    String
+}
+
+model Language {
+  id       Int       @id @default(autoincrement())
+  code     String    @unique
+  name     String
+  nameEn   String
+  order    Int
+  meanings Meaning[]
+  users    User[]    // 逆方向のリレーションフィールドを追加
 }
 
 model Example {
@@ -99,8 +121,7 @@ model Example {
   word      Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
   wordId    Int
   sentence  String
-  meaningEn String
-  audioUrl  String?
+  meanings  Meaning[]
 }
 
 model UserProgress {

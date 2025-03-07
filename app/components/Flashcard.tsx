@@ -81,7 +81,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
   }
 
   const speakWord = () => {
-    const utterance = new SpeechSynthesisUtterance(currentWord.kanji || currentWord.furigana)
+    const utterance = new SpeechSynthesisUtterance(currentWord.word || currentWord.furigana)
     utterance.lang = "ja-JP"
     speechSynthesis.speak(utterance)
   }
@@ -129,7 +129,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
               <CardContent className="flex flex-col items-center justify-center h-full text-center p-6">
                 {!isFlipped ? (
                   <>
-                    <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.kanji || currentWord.furigana}</h2>
+                    <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.word || currentWord.furigana}</h2>
                     <div className="space-y-1">
                       <p className="text-lg">{currentWord.furigana}</p>
                       <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
@@ -142,7 +142,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
                       <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
                         <Image
                           src={currentWord.imageUrl || "/placeholder.svg"}
-                          alt={currentWord.kanji || currentWord.furigana}
+                          alt={currentWord.word || currentWord.furigana}
                           layout="responsive"
                           width={100}
                           height={100}

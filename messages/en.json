@@ -32,6 +32,8 @@
     "csv_upload": "CSV Upload",
     "image_upload": "Image Upload",
     "add_level": "Add Level",
+    "words_csv_upload": "Words CSV Upload",
+    "translation_csv_upload": "Translation CSV Upload",
     "image": "Image",
     "operation": "Operation",
     "word": "Word",

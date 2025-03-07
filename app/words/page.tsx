@@ -28,7 +28,7 @@ export default function WordsPage() {
   useEffect(() => {
     const filtered = words.filter(
       (word) =>
-        word.kanji?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.word?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.furigana?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.meaningEn?.toLowerCase().includes(searchTerm.toLowerCase()),
     )
@@ -66,7 +66,7 @@ export default function WordsPage() {
             <Card key={word.id}>
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
-                  <span>{word.kanji || word.furigana}</span>
+                  <span>{word.word || word.furigana}</span>
                   <span className={`text-xs px-2 py-1 rounded-full text-white ${getStatusColor(status.status || "")}`}>
                     {status.status || "未学習"}
                   </span>

@@ -87,7 +87,7 @@ export default function AdminPage() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleWordsUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!file) {
       setError(`${t('select_file')}`)
@@ -98,6 +98,28 @@ export default function AdminPage() {
     formData.append("file", file)
 
     const response = await fetch("/api/admin/words", {
+      method: "POST",
+      body: formData,
+    })
+
+    if (response.ok) {
+      alert(`${t('data_uploaded_successfully')}`)
+      fetchLevels()
+    } else {
+      setError(`${t('upload_failed')}`)
+    }
+  }
+  const handleTranslationUpload = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!file) {
+      setError(`${t('select_file')}`)
+      return
+    }
+
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const response = await fetch("/api/admin/words-translation", {
       method: "POST",
       body: formData,
     })
@@ -235,9 +257,14 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold">管理画面</h1>
         <div className="flex gap-2">
           <Input type="file" accept=".csv" onChange={handleFileChange} className="max-w-xs" />
-          <Button onClick={handleSubmit} variant="outline">
+          <Button onClick={handleWordsUpload} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
-            {t('csv_upload')}
+            {t('words_csv_upload')}
+          </Button>
+          <Input type="file" accept=".csv" onChange={handleFileChange} className="max-w-xs" />
+          <Button onClick={handleTranslationUpload} variant="outline">
+            <Upload className="mr-2 h-4 w-4" />
+            {t('translation_csv_upload')}
           </Button>
           <Input type="file" accept="image/*" onChange={handleFileChange} className="max-w-xs" />
           <Button onClick={handleImageUpload} variant="outline">
@@ -336,7 +363,7 @@ export default function AdminPage() {
                             <TableBody>
                               {level.words.map((word) => (
                                 <TableRow key={word.id}>
-                                  <TableCell>{word.kanji || word.furigana}</TableCell>
+                                  <TableCell>{word.word || word.furigana}</TableCell>
                                   <TableCell>{word.furigana}</TableCell>
                                   <TableCell>{word.romaji}</TableCell>
                                   <TableCell>{word.meaningEn}</TableCell>
@@ -352,7 +379,7 @@ export default function AdminPage() {
                                     {word.imageUrl && (
                                       <Image
                                         src={word.imageUrl}
-                                        alt={word.kanji || word.furigana}
+                                        alt={word.word || word.furigana}
                                         width={100}
                                         height={100}
                                       />
