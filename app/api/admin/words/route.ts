@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/prisma'
 import { parse } from 'csv-parse/sync'
+import { Word } from '@prisma/client';
 
 export async function POST(request: Request) {
   const formData = await request.formData()
@@ -12,7 +13,8 @@ export async function POST(request: Request) {
 
   const text = await file.text()
   const records = parse(text, {
-    columns: ['levelId', 'text', 'furigana', 'romaji', 'meaning_en', 'examples_sentence', 'examples_meaning_en'],
+    columns: true,
+    // levelId,text,furigana,romaji,meaning_en,examples_sentence,examples_meaning_en
     skip_empty_lines: true,
   })
 
@@ -31,7 +33,14 @@ export async function POST(request: Request) {
           connect: { code: 'en' },
         },
       }
+      console.log(record)
+      const Word = await prisma.word.findFirst({
+        where: {
+          text: record.text,
+        },
+      })
 
+      if (!Word) {
       await prisma.word.create({
         data: {
           levelId: parseInt(record.levelId),
@@ -51,8 +60,11 @@ export async function POST(request: Request) {
           },
         },
       })
+    }
+
+
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 

@@ -1,0 +1,99 @@
+levelId,text,furigana,romaji,meaning_en,examples_sentence,examples_meaning_en
+1,私,わたし,watashi,I/me,私は学生です。,I am a student.
+1,あなた,あなた,anata,you,あなたの名前は何ですか？,What is your name?
+1,彼,かれ,kare,he,彼は医者です。,He is a doctor.
+1,彼女,かのじょ,kanojo,she,彼女は先生です。,She is a teacher.
+1,これ,これ,kore,this (near me),これはペンです。,This is a pen.
+1,それ,それ,sore,that (near you),それは何ですか？,What is that?
+1,あれ,あれ,are,that (over there),あれは私の家です。,That is my house.
+1,ここ,ここ,koko,here,ここに座ってください。,Please sit here.
+1,そこ,そこ,soko,there,そこに行かないでください。,Please don't go there.
+1,あそこ,あそこ,asoko,over there,あそこに公園があります。,There is a park over there.
+1,今,いま,ima,now,今何時ですか？,What time is it now?
+1,今日,きょう,kyou,today,今日は晴れています。,It is sunny today.
+1,明日,あした,ashita,tomorrow,明日は雨かもしれません。,It might rain tomorrow.
+1,昨日,きのう,kinou,yesterday,昨日は忙しかったです。,I was busy yesterday.
+1,一,いち,ichi,one,私は一人です。,I am alone.
+1,二,に,ni,two,二人の友達がいます。,I have two friends.
+1,三,さん,san,three,三冊の本を買いました。,I bought three books.
+1,四,よん/し,yon/shi,four,四人家族です。,We are a family of four.
+1,五,ご,go,five,五分待ってください。,Please wait five minutes.
+1,人,ひと,hito,person,あの人は誰ですか？,Who is that person?
+2,男,おとこ,otoko,man,男の人が立っています。,A man is standing.
+2,女,おんな,onna,woman,女の人が歩いています。,A woman is walking.
+2,子供,こども,kodomo,child,子供たちが遊んでいます。,Children are playing.
+2,家族,かぞく,kazoku,family,家族と一緒に住んでいます。,I live with my family.
+2,友達,ともだち,tomodachi,friend,友達に会いました。,I met my friend.
+2,学生,がくせい,gakusei,student,私は大学の学生です。,I am a university student.
+2,先生,せんせい,sensei,teacher,先生に質問しました。,I asked the teacher a question.
+2,会社,かいしゃ,kaisha,company,会社で働いています。,I work at a company.
+2,学校,がっこう,gakkou,school,学校に行きます。,I go to school.
+2,病院,びょういん,byouin,hospital,病院で診察を受けました。,I had a medical examination at the hospital.
+2,店,みせ,mise,shop/store,その店でパンを買いました。,I bought bread at that store.
+2,家,いえ,ie,house/home,家に帰ります。,I will go home.
+2,部屋,へや,heya,room,部屋を掃除しました。,I cleaned the room.
+2,本,ほん,hon,book,本を読みます。,I read a book.
+2,新聞,しんぶん,shinbun,newspaper,毎朝新聞を読みます。,I read the newspaper every morning.
+2,雑誌,ざっし,zasshi,magazine,雑誌を買いました。,I bought a magazine.
+2,辞書,じしょ,jisho,dictionary,辞書で調べました。,I looked it up in the dictionary.
+2,ノート,ノート,nooto,notebook,ノートに書きます。,I write in my notebook.
+2,手紙,てがみ,tegami,letter,手紙を書きました。,I wrote a letter.
+2,電話,でんわ,denwa,telephone,電話をかけました。,I made a phone call.
+3,メール,メール,meeru,email,メールを送りました。,I sent an email.
+3,コンピューター,コンピューター,konpyuutaa,computer,コンピューターで仕事をします。,I work on the computer.
+3,名前,なまえ,namae,name,名前を教えてください。,Please tell me your name.
+3,時間,じかん,jikan,time,時間がありません。,I don't have time.
+3,日,ひ,hi,day,良い日でした。,It was a good day.
+3,週,しゅう,shuu,week,先週忙しかったです。,I was busy last week.
+3,月,つき,tsuki,month,来月日本に行きます。,I will go to Japan next month.
+3,年,とし,toshi,year,去年卒業しました。,I graduated last year.
+3,時,じ,ji,o'clock,今７時です。,It's 7 o'clock now.
+3,分,ふん,fun,minute,5分遅れました。,I was 5 minutes late.
+3,午前,ごぜん,gozen,morning/AM,午前中に勉強します。,I study in the morning.
+3,午後,ごご,gogo,afternoon/PM,午後から雨です。,It will rain from the afternoon.
+3,朝,あさ,asa,morning,朝ごはんを食べました。,I ate breakfast.
+3,昼,ひる,hiru,noon/daytime,昼ごはんを食べましょう。,Let's eat lunch.
+3,夜,よる,yoru,night/evening,夜遅くまで働きました。,I worked until late at night.
+3,食べる,たべる,taberu,to eat,朝ごはんを食べます。,I eat breakfast.
+3,飲む,のむ,nomu,to drink,水を飲みます。,I drink water.
+3,見る,みる,miru,to see/watch,テレビを見ます。,I watch TV.
+3,聞く,きく,kiku,to hear/listen,音楽を聞きます。,I listen to music.
+4,話す,はなす,hanasu,to speak/talk,日本語を話します。,I speak Japanese.
+4,読む,よむ,yomu,to read,本を読みます。,I read a book.
+4,書く,かく,kaku,to write,手紙を書きます。,I write a letter.
+4,買う,かう,kau,to buy,食べ物を買います。,I buy food.
+4,行く,いく,iku,to go,学校に行きます。,I go to school.
+4,来る,くる,kuru,to come,友達が来ました。,My friend came.
+4,帰る,かえる,kaeru,to return,家に帰ります。,I will go home.
+4,起きる,おきる,okiru,to get up/wake up,毎朝6時に起きます。,I get up at 6 every morning.
+4,寝る,ねる,neru,to sleep,早く寝ます。,I go to bed early.
+4,する,する,suru,to do,宿題をします。,I do my homework.
+4,休む,やすむ,yasumu,to rest/take a day off,今日は休みます。,I will rest today.
+4,働く,はたらく,hataraku,to work,会社で働きます。,I work at a company.
+4,勉強する,べんきょうする,benkyou suru,to study,毎日日本語を勉強します。,I study Japanese every day.
+4,教える,おしえる,oshieru,to teach,日本語を教えています。,I teach Japanese.
+4,立つ,たつ,tatsu,to stand,バスの中で立ちました。,I stood on the bus.
+4,座る,すわる,suwaru,to sit,椅子に座ってください。,Please sit on the chair.
+4,歩く,あるく,aruku,to walk,公園を歩きました。,I walked in the park.
+4,走る,はしる,hashiru,to run,毎朝走ります。,I run every morning.
+4,泳ぐ,およぐ,oyogu,to swim,海で泳ぎました。,I swam in the sea.
+5,好き,すき,suki,like/love,りんごが好きです。,I like apples.
+5,嫌い,きらい,kirai,dislike/hate,納豆が嫌いです。,I dislike natto.
+5,楽しい,たのしい,tanoshii,fun/enjoyable,パーティーは楽しかったです。,The party was fun.
+5,難しい,むずかしい,muzukashii,difficult,日本語は難しいです。,Japanese is difficult.
+5,簡単,かんたん,kantan,easy/simple,この問題は簡単です。,This problem is easy.
+5,美味しい,おいしい,oishii,delicious,このケーキは美味しいです。,This cake is delicious.
+5,高い,たかい,takai,expensive/high,そのカバンは高いです。,That bag is expensive.
+5,安い,やすい,yasui,cheap/inexpensive,このペンは安いです。,This pen is cheap.
+5,大きい,おおきい,ookii,big/large,大きい犬がいます。,There is a big dog.
+5,小さい,ちいさい,chiisai,small,小さい猫がいます。,There is a small cat.
+5,長い,ながい,nagai,long,彼は長い髪があります。,He has long hair.
+5,短い,みじかい,mijikai,short,彼女は短いスカートを着ています。,She is wearing a short skirt.
+5,新しい,あたらしい,atarashii,new,新しい車を買いました。,I bought a new car.
+5,古い,ふるい,furui,old,これは古い家です。,This is an old house.
+5,熱い,あつい,atsui,hot,このスープは熱いです。,This soup is hot.
+5,寒い,さむい,samui,cold,今日は寒いです。,It is cold today.
+5,暑い,あつい,atsui,hot (weather),夏は暑いです。,Summer is hot.
+5,暖かい,あたたかい,atatakai,warm,春は暖かいです。,Spring is warm.
+5,涼しい,すずしい,suzushii,cool,秋は涼しいです。,Fall is cool.
+5,忙しい,いそがしい,isogashii,busy,今週は忙しいです。,I am busy this week.
