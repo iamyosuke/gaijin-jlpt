@@ -43,12 +43,7 @@ const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
   })
 }
 
-const processData = (data: string[]) => {
-  if (data[0] === "levelId,text,furigana,romaji,meaning_en,examples_sentence,examples_mean") {
-    data.shift(); // 一行目をスキップ
-  }
-  // ... existing code to process data ...
-}
+
 
 export default function Flashcard({ levelId }: FlashcardProps) {
   const t = useTranslations('Flashcard')

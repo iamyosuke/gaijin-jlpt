@@ -10,6 +10,20 @@ export async function GET() {
 
   const words = await prisma.word.findMany({
     include: {
+      meanings: true,
+      examples: {
+        include: {
+          meanings: {
+            where: {
+              language: {
+                code: 'en'
+              }
+            }
+          },
+        },
+      },
+
+
       wordStatus: {
         where: {
           userId: session.user.id,

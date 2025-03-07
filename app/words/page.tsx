@@ -4,10 +4,11 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
-import type { Word, UserWordStatus } from "@prisma/client"
+import type { Word, UserWordStatus, Meaning } from "@prisma/client"
 
 interface WordWithStatus extends Word {
   wordStatus: UserWordStatus[]
+  meanings: Meaning[]
 }
 
 export default function WordsPage() {
@@ -28,9 +29,9 @@ export default function WordsPage() {
   useEffect(() => {
     const filtered = words.filter(
       (word) =>
-        word.word?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.furigana?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        word.meaningEn?.toLowerCase().includes(searchTerm.toLowerCase()),
+        word.meanings.find(meaning => meaning.languageId === 1)?.meaning.toLowerCase().includes(searchTerm.toLowerCase())
     )
     setFilteredWords(filtered)
   }, [searchTerm, words])
@@ -66,14 +67,14 @@ export default function WordsPage() {
             <Card key={word.id}>
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
-                  <span>{word.word || word.furigana}</span>
+                  <span>{word.text || word.furigana}</span>
                   <span className={`text-xs px-2 py-1 rounded-full text-white ${getStatusColor(status.status || "")}`}>
                     {status.status || "未学習"}
                   </span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-lg mb-2">{word.meaningEn}</p>
+                <p className="text-lg mb-2">{word.meanings.find(meaning => meaning.languageId === 1)?.meaning}</p>
                 <p className="text-sm text-muted-foreground mb-4">{word.furigana}</p>
                 <Progress value={correctPercentage} className="h-2" />
                 <div className="mt-2 text-sm text-muted-foreground">
