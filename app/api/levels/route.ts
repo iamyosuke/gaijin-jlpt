@@ -6,11 +6,15 @@ export async function GET() {
     include: {
       words: {
         include: {
-          examples: true,
+          examples: {
+            include: {
+              meanings: true,
+            },
+          },
+          meanings: true,
         },
       },
     },
   })
-
   return NextResponse.json(levels)
 } 

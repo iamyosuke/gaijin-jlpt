@@ -16,7 +16,24 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     include: {
       words: {
         include: {
-          examples: true,
+          examples: {
+            include: {
+              meanings: {
+                where: {
+                  language: {
+                    code: 'en'
+                  }
+                }
+              },
+            },
+          },
+          meanings: {
+            where: {
+              language: {
+                code: 'en'
+              }
+            }
+          },
           wordStatus: {
             where: {
               userId: session.user.id

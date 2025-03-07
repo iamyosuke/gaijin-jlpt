@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useEffect, useState } from "react"
 import { ChevronDown, ChevronUp, Grip, Plus, Save, Trash2, Upload } from "lucide-react"
-import type { Word, Level, Example } from "@prisma/client"
+import type { Word, Level, Example, Meaning } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
@@ -15,7 +15,10 @@ import { getImageUrl } from "@/lib/supabase"
 import { useTranslations } from 'next-intl';
 
 interface WordWithExamples extends Word {
-  examples: Example[]
+  meanings: Meaning[]
+  examples: (Example & {
+    meanings: Meaning[]
+  })[]
 }
 
 interface LevelWithWords extends Level {
@@ -55,6 +58,7 @@ export default function AdminPage() {
   const fetchLevels = async () => {
     const response = await fetch("/api/levels")
     const data = await response.json()
+    console.log(data)
     setLevels(data)
   }
 
@@ -363,15 +367,15 @@ export default function AdminPage() {
                             <TableBody>
                               {level.words.map((word) => (
                                 <TableRow key={word.id}>
-                                  <TableCell>{word.word || word.furigana}</TableCell>
+                                  <TableCell>{word.text || word.furigana}</TableCell>
                                   <TableCell>{word.furigana}</TableCell>
                                   <TableCell>{word.romaji}</TableCell>
-                                  <TableCell>{word.meaningEn}</TableCell>
+                                  <TableCell>{word.meanings.find(meaning => meaning.languageId === 1)?.meaning}</TableCell>
                                   <TableCell>
                                     {word.examples.map((example) => (
                                       <div key={example.id} className="space-y-1">
                                         <p>{example.sentence}</p>
-                                        <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
+                                        <p className="text-sm text-muted-foreground">{example.meanings.find(meaning => meaning.languageId === 1)?.meaning}</p>
                                       </div>
                                     ))}
                                   </TableCell>
@@ -379,7 +383,7 @@ export default function AdminPage() {
                                     {word.imageUrl && (
                                       <Image
                                         src={word.imageUrl}
-                                        alt={word.word || word.furigana}
+                                        alt=""
                                         width={100}
                                         height={100}
                                       />

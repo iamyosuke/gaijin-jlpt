@@ -5,13 +5,20 @@ import { ChevronLeft, ChevronRight, Check, X, Volume2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import type { Word, Status, Example } from "@prisma/client"
+import type { Word, Example, Meaning } from "@prisma/client"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useTranslations } from 'next-intl';
 
 interface FlashcardProps {
   levelId: string
+}
+interface ExampleWithMeanings extends Example {
+  meanings: Meaning[]
+}
+interface WordWithMeanings extends Word {
+  examples: ExampleWithMeanings[]
+  meanings: Meaning[]
 }
 
 export enum AnswerStatus {
@@ -38,7 +45,7 @@ const updateWordStatus = async (wordId: number, isCorrect: boolean) => {
 
 export default function Flashcard({ levelId }: FlashcardProps) {
   const t = useTranslations('Flashcard')
-  const [words, setWords] = useState<(Word & { examples: Example[]; wordStatus: { status: Status }[] })[]>([])
+  const [words, setWords] = useState<WordWithMeanings[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -81,7 +88,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
   }
 
   const speakWord = () => {
-    const utterance = new SpeechSynthesisUtterance(currentWord.word || currentWord.furigana)
+    const utterance = new SpeechSynthesisUtterance(currentWord.text || currentWord.furigana || "")
     utterance.lang = "ja-JP"
     speechSynthesis.speak(utterance)
   }
@@ -129,7 +136,7 @@ export default function Flashcard({ levelId }: FlashcardProps) {
               <CardContent className="flex flex-col items-center justify-center h-full text-center p-6">
                 {!isFlipped ? (
                   <>
-                    <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.word || currentWord.furigana}</h2>
+                    <h2 className="text-4xl sm:text-6xl mb-4">{currentWord.text || currentWord.furigana}</h2>
                     <div className="space-y-1">
                       <p className="text-lg">{currentWord.furigana}</p>
                       <p className="text-lg text-muted-foreground">{currentWord.romaji}</p>
@@ -137,12 +144,12 @@ export default function Flashcard({ levelId }: FlashcardProps) {
                   </>
                 ) : (
                   <>
-                    <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meaningEn}</p>
+                    <p className="text-xl sm:text-2xl font-medium mb-4">{currentWord.meanings[0].meaning}</p>
                     {currentWord.imageUrl && (
                       <div className="w-full max-w-xs h-48 mb-4 overflow-hidden rounded-lg">
                         <Image
                           src={currentWord.imageUrl || "/placeholder.svg"}
-                          alt={currentWord.word || currentWord.furigana}
+                          alt={currentWord.text || currentWord.furigana || ""}
                           layout="responsive"
                           width={100}
                           height={100}
@@ -152,10 +159,10 @@ export default function Flashcard({ levelId }: FlashcardProps) {
                     )}
                     {currentWord.examples && currentWord.examples.length > 0 && (
                       <div className="w-full mt-4 p-4 bg-muted rounded-lg">
-                        {currentWord.examples.map((example: Example) => (
+                        {currentWord.examples.map((example) => (
                           <div key={example.id} className="mb-4">
                             <p className="text-base sm:text-lg mb-2">{example.sentence}</p>
-                            <p className="text-sm text-muted-foreground">{example.meaningEn}</p>
+                            <p className="text-sm text-muted-foreground">{example.meanings[0].meaning}</p>
                           </div>
                         ))}
                       </div>

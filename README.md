@@ -64,3 +64,4 @@ SRS（Spaced Repetition System）に基づいた単語の出題
 オフラインモード対応（電波がない場所でも学習可能）
 音声認識機能（発音チェック）
 カスタム単語帳作成（自分専用の単語リストを作れる）
+npx prisma db seed                           
