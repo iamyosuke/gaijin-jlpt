@@ -82,13 +82,19 @@ async function main() {
           create: word.examples.map(example => ({
             ...example,
             meanings: {
-              create: example.meanings,
+              create: example.meanings.map(meaning => ({
+                ...meaning,
+                language: {
+                  connect: { code: meaning.code },
+                },
+              })),
             }
           })),
         },
       },
     })
   }
+}
 
 main()
   .catch((e) => {
