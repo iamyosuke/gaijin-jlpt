@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/prisma'
 import { parse } from 'csv-parse/sync'
-import { Word } from '@prisma/client';
 
 export async function POST(request: Request) {
   const formData = await request.formData()
