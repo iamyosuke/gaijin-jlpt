@@ -1,14 +1,21 @@
-import { NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
+import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { OpenAI } from 'openai';
 
-const PIXABAY_API_KEY = '45056603-00fe9b2d5ded8a95b6d6f62ac'; // ここにPixabayのAPIキーを入力してください
+// OpenAIのAPIキーを設定
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // 環境変数からAPIキーを取得
+});
 
 export async function POST() {
   try {
     // 画像がない単語をデータベースから取得
     const wordsWithoutImages = await prisma.word.findMany({
       where: { imageUrl: null },
+      orderBy: {
+        id: 'asc',
+      },
       include: {
         meanings: {
           where: {
@@ -24,17 +31,21 @@ export async function POST() {
       return NextResponse.json({ message: 'No words without images found' });
     }
 
-    for (const word of wordsWithoutImages) {
-      // Pixabay APIを使用して画像を取得
-      const response = await fetch(`https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(word.meanings[0].meaning)}&image_type=photo`);
-      const data = await response.json();
+    for (const word of wordsWithoutImages.slice(0, 10)) {
+      // DALL-E 2 APIを使用して画像を生成
+      const response = await openai.images.generate({
+        model: "dall-e-2",
+        prompt: word.meanings[0].meaning,
+        n: 1,
+        size: "256x256",
+      });
 
-      if (data.hits.length === 0) {
-        console.log(`No images found for word: ${word.meanings[0].meaning}`);
+      const imageUrl = response.data[0].url;
+
+      if (!imageUrl) {
+        console.error(`No image URL found for word: ${word.text}`);
         continue;
       }
-
-      const imageUrl = data.hits[0].webformatURL;
 
       // Supabase Storageに画像をアップロード
       const imageResponse = await fetch(imageUrl);
