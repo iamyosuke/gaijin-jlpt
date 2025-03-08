@@ -31,7 +31,7 @@ export async function POST() {
       return NextResponse.json({ message: 'No words without images found' });
     }
 
-    for (const word of wordsWithoutImages.slice(0, 10)) {
+    for (const word of wordsWithoutImages) {
       // DALL-E 2 APIを使用して画像を生成
       const response = await openai.images.generate({
         model: "dall-e-2",
