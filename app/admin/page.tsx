@@ -135,6 +135,18 @@ export default function AdminPage() {
       setError(`${t('upload_failed')}`)
     }
   }
+  const handleAddImage = async () => {
+    const response = await fetch(`/api/admin/words/add-images`, {
+      method: "POST",
+    });
+  
+    if (response.ok) {
+      alert(`${t('image_added_successfully')}`);
+      fetchLevels();
+    } else {
+      alert(`${t('add_image_failed')}`);
+    }
+  };
 
   const handleDeleteWord = async (wordId: number) => {
     const response = await fetch(`/api/admin/words/${wordId}`, {
@@ -274,6 +286,10 @@ export default function AdminPage() {
           <Button onClick={handleImageUpload} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
             {t('image_upload')}
+          </Button>
+          <Button onClick={handleAddImage} variant="outline">
+            <Upload className="mr-2 h-4 w-4" />
+            {t('add_image')}
           </Button>
         </div>
       </div>
