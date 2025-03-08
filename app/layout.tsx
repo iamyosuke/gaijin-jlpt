@@ -28,7 +28,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SessionProvider>
             <NextIntlClientProvider messages={messages}>
-              <div className="min-h-screen  bg-background">
+              <div className="h-full  bg-background">
                 <main className="container mx-auto p-4">{children}</main>
               </div>
               <Footer />
